@@ -37,7 +37,7 @@ def instadl(message):
     os.system("yt-dlp "+ message.text.replace("/instadl ", "") + " -o instadl/insta.mp4")
     print(message.text)
     #os.chdir("..")
-    bot.send_video(message.chat.id, telebot.types.InputFile("/data/data/com.termux/files/home/myProjects/tgbot/instadl/insta.mp4"))
+    bot.send_video(message.chat.id, telebot.types.InputFile("./instadl/insta.mp4"))
 
 @bot.message_handler(func=lambda msg: True)
 def tweet_to_nit(message):
