@@ -47,7 +47,8 @@ def instadl(message):
     os.system("yt-dlp "+ message.text.replace("/ytdl ", "") + " -o ytdl/yt.webm")
     print(message.text)
     #os.chdir("..")
-    bot.send_video(message.chat.id, telebot.types.InputFile("ytdl/yt.webm"))
+    os.system("mv ytdl/yt.webm ytdl/yt.mp4")
+    bot.send_video(message.chat.id, telebot.types.InputFile("ytdl/yt.mp4"))
     os.system("rm ytdl/yt*")
 
 @bot.message_handler(func=lambda msg: True)
