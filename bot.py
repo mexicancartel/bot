@@ -34,10 +34,11 @@ def stickerToElement(message):
 def instadl(message):
     bot.send_message(message.chat.id, "Attempt started")
     #os.chdir("instadl")
-    os.system("yt-dlp "+ message.text.replace("/instadl ", "") + " -o instadl/insta.mp4")
+    os.system("yt-dlp "+ message.text.replace("/instadl ", "") + " -o instadl/insta")
     print(message.text)
     #os.chdir("..")
-    bot.send_video(message.chat.id, telebot.types.InputFile("/data/data/com.termux/files/home/myProjects/tgbot/instadl/insta.mp4"))
+    bot.send_video(message.chat.id, telebot.types.InputFile("instadl/insta*"))
+    os.remove("instadl/insta*")
 
 @bot.message_handler(func=lambda msg: True)
 def tweet_to_nit(message):
