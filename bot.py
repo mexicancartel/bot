@@ -44,12 +44,13 @@ def instadl(message):
 def ytdl(message):
     bot.send_message(message.chat.id, "Attempt started")
     #os.chdir("instadl")
-    os.system("yt-dlp "+ message.text.replace("/ytdl ", "") + " -o ytdl/yt")
+    ID=message.text.replace("/ytdl https://youtu.be/","")
+    ID=ID.replace("/ytdl https://youtube.com/watch?v=","")
+    os.system("yt-dlp "+ message.text.replace("/ytdl ", "") + " -o ytdl/"+ID)
     print(message.text)
-    #os.chdir("..")
-    os.system("mv ytdl/yt.webm ytdl/yt.mp4")
+    os.system("mv ytdl/"+ID+"* ytdl/yt.mp4")
     bot.send_video(message.chat.id, telebot.types.InputFile("ytdl/yt.mp4"))
-    os.system("rm ytdl/yt*")
+    os.system("rm ytdl/yt.*")
 
 @bot.message_handler(func=lambda msg: True)
 def tweet_to_nit(message):
