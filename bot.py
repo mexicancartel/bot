@@ -40,6 +40,16 @@ def instadl(message):
     bot.send_video(message.chat.id, telebot.types.InputFile("instadl/insta.mp4"))
     os.system("rm instadl/insta*")
 
+@bot.message_handler(commands=['ytdl'])
+def instadl(message):
+    bot.send_message(message.chat.id, "Attempt started")
+    #os.chdir("instadl")
+    os.system("yt-dlp "+ message.text.replace("/ytdl ", "") + " -o ytdl/yt.webm")
+    print(message.text)
+    #os.chdir("..")
+    bot.send_video(message.chat.id, telebot.types.InputFile("ytdl/yt.webm"))
+    os.system("rm ytdl/yt*")
+
 @bot.message_handler(func=lambda msg: True)
 def tweet_to_nit(message):
     if "x.com" in message.text: 
