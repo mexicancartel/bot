@@ -41,10 +41,10 @@ def instadl(message):
     os.system("rm instadl/insta*")
 
 @bot.message_handler(commands=['ytdl'])
-def instadl(message):
+def ytdl(message):
     bot.send_message(message.chat.id, "Attempt started")
     #os.chdir("instadl")
-    os.system("yt-dlp "+ message.text.replace("/ytdl ", "") + " -o ytdl/yt.webm")
+    os.system("yt-dlp "+ message.text.replace("/ytdl ", "") + " -o ytdl/yt")
     print(message.text)
     #os.chdir("..")
     os.system("mv ytdl/yt.webm ytdl/yt.mp4")
