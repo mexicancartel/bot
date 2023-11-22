@@ -49,7 +49,7 @@ def ytdl(message):
     os.system("yt-dlp "+ message.text.replace("/ytdl ", "") + " -o ytdl/"+ID)
     print(message.text)
     os.system("mv ytdl/"+ID+"* ytdl/yt.mp4")
-    bot.send_video(message.chat.id, telebot.types.InputFile("ytdl/yt.mp4"))
+    bot.send_video(message.chat.id, open("ytdl/yt.mp4", "rb"), timeout=10000, supports_streaming=True)
     os.system("rm ytdl/yt.*")
 
 @bot.message_handler(func=lambda msg: True)
