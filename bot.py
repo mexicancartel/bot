@@ -2,7 +2,7 @@
 
 import config
 
-import os, telebot
+import os, telebot, yt_dlp
 
 bot = telebot.TeleBot(config.BOT_TOKEN)
 
@@ -49,8 +49,25 @@ def ytdl(message):
     os.system("yt-dlp "+ message.text.replace("/ytdl ", "") + " -o ytdl/"+ID)
     print(message.text)
     os.system("mv ytdl/"+ID+"* ytdl/yt.mp4")
-    bot.send_video(message.chat.id, open("ytdl/yt.mp4", "rb"), timeout=10000, supports_streaming=True)
+    bot.send_video(message.chat.id, telebot.types.InputFile("ytdl/yt.mp4"), timeout=10000, supports_streaming=True)
     os.system("rm ytdl/yt.*")
+
+@bot.message_handler(commands=['ytdlmusic'])
+def ytdlmusic(message):
+    bot.reply_to(message, "I'm Tryna download da aauudioooooo...🎶🎵🎼")
+    URL = message.text.replace("/ytdlmusic ","")
+    ID=message.text.replace("/ytdlmusic https://youtu.be/","")
+    ID=ID.replace("/ytdl https://youtube.com/watch?v=","")
+    info=yt_dlp.YoutubeDL().extract_info(URL, download=False)
+    vid_title=info.get('title', None)
+    ytdl_opts = {
+        'outtmpl': 'ytdl/'+vid_title+'.m4a',
+        'format': 'bestaudio'
+    }
+    dl = yt_dlp.YoutubeDL(ytdl_opts)
+    dl.download(URL)
+    bot.send_audio(message.chat.id, telebot.types.InputFile("ytdl/"+vid_title+".m4a"), timeout=10000)
+    os.remove("ytdl/"+vid_title+".m4a")
 
 @bot.message_handler(func=lambda msg: True)
 def tweet_to_nit(message):
@@ -64,4 +81,4 @@ def echoing(message):
     if message.chat.id==0:          #disabled
         bot.reply_to(message, message.text)
 
-bot.infinity_polling()
+bot.infinity_polling(timeout=1000)
